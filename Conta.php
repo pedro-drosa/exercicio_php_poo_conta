@@ -17,15 +17,17 @@ class ContaBanco{
 		$this->setStatus(true);
 		if ($t == "CC") {
 			$this->setSaldo(50);
+			echo "<p>Conta ".$this->getTipo()."criada com sucesso! Saldo atual:R$".$this->getSaldo()."</p>";
 		}elseif($t == "CP"){
 			$this->setSaldo(150);
+			echo "<p>Conta ".$this->getTipo()."criada com sucesso! Saldo atual:R$".$this->getSaldo()."</p>";
 		}
 	}
 	public function fecharConta(){
 		if ($this->getSaldo() > 0) {
-			echo "Conta Com dinheiro!";
+			echo "A conta não pode ser fechada! Saldo atual:R$".$this->getSaldo()."</p>";
 		}elseif($this->getSaldo() < 0 ){
-			echo "Conta em Débito";
+			echo "Sua Conta não pode ser encerrada. Débito atual: R$".$this->getSaldo()."</p>";
 		}else{
 			$this->setStatus(false);
 		}
@@ -33,16 +35,18 @@ class ContaBanco{
 	public function depositar($v){
 		if ($this->getStatus() == true) {
 			$this->setSaldo($this->getSaldo() + $v);
+			echo "<p>Deposito autorizado: Valor:R$".$v. " Nome:".$this->getDono()." Conta:Nº". $this->getNumConta()." Saldo atual: R$".$this->getSaldo()."</p>";
 		}else{
 			echo "Impossível depositar!";
 		}
 	}
 	public function sacar($v){
 		if ($this->getStatus() == true) {
-			if ($this->getSaldo() > $v) {
-				$this ->setSaldo($this->getSaldo() + $v);
+			if ($this->getSaldo() >= $v) {
+				$this ->setSaldo($this->getSaldo() - $v);
+				echo "<p>Saque autorizado: Valor:R$".$v. " Nome:".$this->getDono()." Conta:Nº". $this->getNumConta()."Saldo atual: R$".$this->getSaldo()."</p>";
 			}else{
-				echo "Saldo insuficiente para saque.";
+				echo "Saldo insuficiente para saque. Valor disponível:R$".$this->getSaldo();
 			}
 		}else{
 			echo "Conta inativa";
@@ -55,10 +59,11 @@ class ContaBanco{
 			$v = 20;
 		}
 		if ($this->getStatus()) {
-			if ($this->getSaldo() > $v) {
-				$this->setSaldo(getSaldo() - $v);
+			if ($this->getSaldo() >= $v) {
+				$this->setSaldo($this->getSaldo() - $v);
+				echo "<p>Mensalidade paga: Valor:R$".$v. " Nome:".$this->getDono()." Conta:Nº". $this->getNumConta()."Saldo atual: R$".$this->getSaldo()."</p>";
 			}else{
-				echo "saldo insuficiente";
+				echo "<p>saldo insuficiente para pagamento de Mensalidade Saldo atual: R$".$this->getSaldo()."</p>";
 			}
 		}else{
 			echo "Conta inexistente";
@@ -78,7 +83,7 @@ class ContaBanco{
 		$this->tipo = $t;
 	}
 	public function getDono(){
-		return $this->Dono;
+		return $this->dono;
 	}
 	public function setDono($d){
 		$this->dono = $d;
